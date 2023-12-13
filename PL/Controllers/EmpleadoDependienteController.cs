@@ -103,6 +103,33 @@ namespace PL.Controllers
         [HttpPost]
         public IActionResult Form(ML.Dependiente dependiente)
         {
+            string NumeroEmpleado = HttpContext.Session.GetString("Empleado");
+
+            if(dependiente.IdDependiente == 0) //Agregar
+            {
+                ML.Result result = BL.Dependiente.Add(dependiente, NumeroEmpleado);
+
+                if (result.Correct)
+                {
+                    ViewBag.Mensaje = "Dependiente añadido correctamente";
+                }
+                else
+                {
+                    ViewBag.Mensaje = result.ErrorMessage;
+                }
+            }
+            else //Actualizar
+            {
+                ML.Result result = BL.Dependiente.Update(dependiente,NumeroEmpleado);
+                if (result.Correct)
+                {
+                    ViewBag.Mensaje = "Dependiente actualizado correctamente";
+                }
+                else
+                {
+                    ViewBag.Mensaje = result.ErrorMessage;
+                }
+            }
             return View("Modal");
         }
 

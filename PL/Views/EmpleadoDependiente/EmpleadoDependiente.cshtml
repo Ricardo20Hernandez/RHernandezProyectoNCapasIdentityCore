@@ -55,7 +55,7 @@
                             {
                                 <tr class="table">
                                     <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill " href="@Url.Action("Form","EmpleadoDependiente", new{IdDependiente = dependiente.IdDependiente})"></a></td>
-                                    <td class="visually-hidden">IdDependiente</td>
+                                    <td class="visually-hidden">@dependiente.IdDependiente</td>
                                     <td class="text-center">@dependiente.Nombre @dependiente.ApellidoPaterno @dependiente.ApellidoMaterno</td>
                                     <td class="text-center">@dependiente.FechaNacimiento</td>
                                     <td class="text-center">@dependiente.EstadoCivil</td>

@@ -17,8 +17,7 @@
                 <p>@ViewBag.Mensaje</p>
             </div>
             <div class="modal-footer">
-                @Html.ActionLink("Regresar", "EmpleadoDependiente", "EmpleadoDependiente", new { @class = "btn btn-primary" })
-
+                <a href="@Url.Action("EmpleadoDependiente","EmpleadoDependiente")" class="btn btn-primary"> Regresar</a>
             </div>
         </div>
     </div>

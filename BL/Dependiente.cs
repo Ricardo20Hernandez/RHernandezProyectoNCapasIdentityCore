@@ -136,6 +136,96 @@ namespace BL
             return result;
         }
 
+        public static ML.Result Add(ML.Dependiente dependiente, string numeroEmpleado)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.RhernandezProyectoNcapasIdentityCoreContext context = new DL.RhernandezProyectoNcapasIdentityCoreContext())
+                {
+                    DL.Dependiente dependent = new DL.Dependiente();
+
+                    dependent.NumeroEmpleado = numeroEmpleado;
+                    dependent.Nombre = dependiente.Nombre;
+                    dependent.ApellidoPaterno = dependiente.ApellidoPaterno;
+                    dependent.ApellidoMaterno = dependiente.ApellidoMaterno;
+                    dependent.FechaNacimiento = DateTime.Parse(dependiente.FechaNacimiento);
+                    dependent.EstadoCivil = dependiente.EstadoCivil;
+                    dependent.Genero = dependiente.Genero;
+                    dependent.Telefono = dependiente.Telefono;
+                    dependent.Rfc = dependiente.RFC;
+                    dependent.IdDependienteTipo = dependiente.DependienteTipo.IdDependienteTipo;
+
+                    context.Dependientes.Add(dependent);
+
+                    int RowsAffected = context.SaveChanges();
+
+                    if (RowsAffected > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "El dependiente no se ha añadido";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = "Problemas al añadir al dependiente" + result.Ex;
+                //throw;
+            }
+            return result;
+        }
+
+        public static ML.Result Update(ML.Dependiente dependiente, string numeroEmpleado)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.RhernandezProyectoNcapasIdentityCoreContext context = new DL.RhernandezProyectoNcapasIdentityCoreContext())
+                {
+                    var query = (from dependent in context.Dependientes
+                                 where dependent.IdDependiente == dependiente.IdDependiente
+                                 select dependent).SingleOrDefault();
+                    
+                    if(query != null )
+                    {
+                        query.IdDependiente = dependiente.IdDependiente;
+                        query.NumeroEmpleado = numeroEmpleado;
+                        query.Nombre = dependiente.Nombre;
+                        query.ApellidoPaterno = dependiente.ApellidoPaterno;
+                        query.ApellidoMaterno = dependiente.ApellidoMaterno;
+                        query.FechaNacimiento = DateTime.Parse(dependiente.FechaNacimiento);
+                        query.EstadoCivil = dependiente.EstadoCivil;
+                        query.Genero = dependiente.Genero;
+                        query.Telefono = dependiente.Telefono;
+                        query.Rfc = dependiente.RFC;
+                        query.IdDependienteTipo = dependiente.DependienteTipo.IdDependienteTipo;
+
+                        int RowsAffected = context.SaveChanges();
+
+                        if (RowsAffected > 0)
+                        {
+                            result.Correct = true;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = "Problemas al actualizar al dependiente" + result.Ex;
+                //throw;
+            }
+            return result;
+        }
+
         public static ML.Result Delete(int IdDependiente)
         {
             ML.Result result = new ML.Result();

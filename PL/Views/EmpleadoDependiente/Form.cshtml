@@ -7,12 +7,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md">
-            <h1>Dependiente</h1>
+            <h1 style="font-weight:bold">Dependiente</h1>
+            <br />
+            <br />
         </div>
     </div>
     <div class="row">
         <div class="col-md">
             <h3>@ViewBag.Accion</h3>
+            <br />
         </div>
     </div>
     <div class="row">
@@ -22,48 +25,189 @@
     </div>
     @using (Html.BeginForm("Form", "EmpleadoDependiente", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-       <div class="row">
-           <div class="col-md-12">
-               @Html.LabelFor(model => model.IdDependiente)
-               @Html.TextBoxFor(model => model.IdDependiente, new { @class = "visually-hidden"})
-           </div>
-       </div>
-       <div class="row">
-           <div class="col-md">
-               @Html.LabelFor(model => model.Nombre)
-               @Html.TextBoxFor(model => model.Nombre, new {@class = "form-control"})
-           </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.IdDependiente, new { @class = "visually-hidden"})
+                @Html.TextBoxFor(model => model.IdDependiente, new { @class = "visually-hidden"})
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md">
+                @Html.Label(null,"*",new {@style = "color:red;"})
+                @Html.LabelFor(model => model.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new {@class = "form-control", @onkeypress = "return SoloLetras(event,'lblErrorNombre')" })
+                <label id="lblErrorNombre"></label>
+            </div>
+            <div class="col-md">
+                @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.ApellidoPaterno)
-                @Html.TextBoxFor(model => model.ApellidoPaterno, new {@class = "form-control"})
+                @Html.TextBoxFor(model => model.ApellidoPaterno, new {@class = "form-control", @onkeypress = "return SoloLetras(event,'lblErrorApellidoPaterno')"})
+                <label id="lblErrorApellidoPaterno"></label>
             </div>
             <div class="col-md">
+                @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.ApellidoMaterno)
-                @Html.TextBoxFor(model => model.ApellidoMaterno, new{ @class = "form-control"})
+                @Html.TextBoxFor(model => model.ApellidoMaterno, new{ @class = "form-control" , @onkeypress = "return SoloLetras(event,'lblErrorApellidoMaterno')"})
+                <label id="lblErrorApellidoMaterno"></label>
             </div>
             <div class="col-md">
+                @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.FechaNacimiento)
-                @Html.EditorFor(model => model.FechaNacimiento, new{ @class = "form-control"})
+                @Html.EditorFor(model => model.FechaNacimiento, new{ htmlAttributes = new { @id = "datepicker"}})
             </div>
-       </div>
-       <br />
-       <div class="row">
-           <div class="col-md">
-               @Html.LabelFor(model => model.EstadoCivil)
-               @Html.TextBoxFor(model => model.EstadoCivil, new { @class = "form-control"})
-           </div>
-           <div class="col-md">
-               <div class="row">
-                   <div class="col-md">
-                       @Html.LabelFor(model => model.Genero)
-                   </div>
-               </div>
-                @if (Model.Genero == "G")
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md">
+                @Html.Label(null,"*",new {@style = "color:red;"})
+                @Html.LabelFor(model => model.EstadoCivil)
+                @Html.TextBoxFor(model => model.EstadoCivil, new { @class = "form-control" , @onkeypress = "return SoloLetras(event,'lblErrorEstadoCivil')"})
+                <label id="lblErrorEstadoCivil"></label>
+            </div>
+            <div class="col-md">
+                <div class="row">
+                    <div col-md-1>
+                        @Html.Label(null,"*",new {@style = "color:red;"})
+                    </div>
+                    <div class="col-md">
+                        @Html.LabelFor(model => model.Genero)
+                    </div>
+                </div>
+                @if (Model.Genero == "M ")
                 {
-                    <label></label>
+                    //<label>@Html.RadioButtonFor(model => model.Genero, "M", new { @id = "rbtnSexoM", @style = "width: 20px; height: 20px;", @checked = "true" }) Masculino</label>
+                    <label><input type="radio" name="Genero" value="M" style="width: 20px; height: 20px;" checked="checked" /> Masculino</label>
+                    <label><input type="radio" name="Genero" value="F" style="width: 20px; height: 20px;" /> Femenino</label>
+                    //<label>@Html.RadioButtonFor(model => model.Genero, "F", new { @id = "rbtnSexoF", @style = "width: 20px; height: 20px;" }) Femenino</label>
+                }
+                else if (Model.Genero == "F ")
+                {
+                    //<label>@Html.RadioButtonFor(model => model.Genero, "M", new { @id = "rbtnSexoM", @style = "width: 20px; height: 20px;" }) Masculino</label>
+                    <label><input type="radio" name="Genero" value="M" style="width: 20px; height: 20px;" /> Masculino</label>
+                    <label><input type="radio" name="Genero" value="F" style="width: 20px; height: 20px;" checked="checked" /> Femenino</label>
+                    //<label>@Html.RadioButtonFor(model => model.Genero, "F", new { @id = "rbtnSexoF", @style = "width: 20px; height: 20px;", @checked = "checked" }) Femenino</label>
+                }
+                else
+                {
+                    //<label>@Html.RadioButtonFor(model => model.Genero, "M", new { @id = "rbtnSexoM", @style = "width: 20px; height: 20px;" }) Masculino</label>
+                    <label><input type="radio" name="Genero" value="M" style="width: 20px; height: 20px;" /> Masculino</label>
+                    <label><input type="radio" name="Genero" value="F" style="width: 20px; height: 20px;" /> Femenino</label>
+                    //<label>@Html.RadioButtonFor(model => model.Genero, "F", new { @id = "rbtnSexoF", @style = "width: 20px; height: 20px;" }) Femenino</label>
                 }
             </div>
-       </div>
+            <div class="col-md">
+                @Html.Label(null,"*",new {@style = "color:red;"})
+                @Html.LabelFor(model => model.Telefono)
+                @Html.TextBoxFor(model => model.Telefono, new{ @class = "form-control", @id="txtTelefono", @onblur = "ValidarTelefono('txtTelefono','lblErrorTelefono')"})
+                <label id="lblErrorTelefono"></label>
+            </div>
+            <div class="col-md">
+                @Html.Label(null,"*",new {@style = "color:red;"})
+                @Html.LabelFor(model => model.RFC)
+                @Html.TextBoxFor(model => model.RFC, new{ @class = "form-control", @id="txtRFC", @onblur = "ValidarRFC('txtRFC','lblErrorRFC')"})
+                <label id="lblErrorRFC"></label>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                @Html.Label(null,"*",new {@style = "color:red;"})
+                @Html.LabelFor(model => model.DependienteTipo)
+                @Html.DropDownListFor(model => model.DependienteTipo.IdDependienteTipo, new SelectList(Model.DependienteTipo.DependientesTipos,"IdDependienteTipo", "Nombre"), "Selecciones un Tipo Dependiente", new{ @class = "form-control"})
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md">
+                <input type="submit" class="btn btn-success" value=" @ViewBag.Accion" />
+                <a class="btn btn-danger" asp-action="EmpleadoDependiente" asp-controller="EmpleadoDependiente"> Regresar</a>
+            </div>
+        </div>
     }
 </div>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1910:2023',
+                maxDate: new Date()
+            });
+        });
+    </script>
+
+}
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script type="text/javascript">
+
+    function SoloNumero(event, controlId) {
+        var numero = event.key;
+        var regex = /^([0-9])*$/;
+
+        if (regex.test(numero)) {
+            $('#' + controlId).text("");
+            return true;
+        } else {
+            $('#' + controlId).text("Solo se aceptan números");
+            $('#' + controlId).css({ color: "red" });
+            return false;
+        }
+    }
+
+    function SoloLetras(event, controlId) {
+        var letra = event.key;
+        var regex = /^[a-zA-Z\s]+$/;
+
+        if (regex.test(letra)) {
+            $('#' + controlId).text("");
+            return true;
+        } else {
+            $('#' + controlId).text("Solo se aceptan letras");
+            $('#' + controlId).css({ color: "red" });
+            return false;
+        }
+    }
+
+    function ValidarTelefono(txtelement, controlId) {
+        var telefono = $('#' + txtelement).val();
+        var regex = /^\d{10}$/;
+
+        if (!regex.test(telefono)) {
+            $('#' + controlId).text("Número Invalido");
+            $('#' + controlId).css({ color: "red" });
+            return false;
+        } else {
+            $('#' + controlId).text("Número Valido");
+            $('#' + controlId).css({ color: "green" });
+            return true;
+        }
+    }
+
+    function ValidarRFC(txtelement, controlId) {
+        var rfc = $("#" + txtelement).val();
+        var regex = /^(?=.*[A-Z])(?=.*\d)[A-Z\d]{13}$/;
+
+        if (!regex.test(rfc)) {
+            $("#" + controlId).text("RFC invalido");
+            $('#' + controlId).css({ color: "red" });
+            return false;
+        } else {
+            $("#" + controlId).text("RFC valido");
+            $('#' + controlId).css({ color: "green" });
+        }
+    }
+
+</script>
 
