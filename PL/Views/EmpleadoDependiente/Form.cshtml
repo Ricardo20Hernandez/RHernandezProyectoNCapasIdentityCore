@@ -1,0 +1,69 @@
+﻿@model ML.Dependiente
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>Dependiente</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h3>@ViewBag.Accion</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h6></h6>
+        </div>
+    </div>
+    @using (Html.BeginForm("Form", "EmpleadoDependiente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+       <div class="row">
+           <div class="col-md-12">
+               @Html.LabelFor(model => model.IdDependiente)
+               @Html.TextBoxFor(model => model.IdDependiente, new { @class = "visually-hidden"})
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-md">
+               @Html.LabelFor(model => model.Nombre)
+               @Html.TextBoxFor(model => model.Nombre, new {@class = "form-control"})
+           </div>
+            <div class="col-md">
+                @Html.LabelFor(model => model.ApellidoPaterno)
+                @Html.TextBoxFor(model => model.ApellidoPaterno, new {@class = "form-control"})
+            </div>
+            <div class="col-md">
+                @Html.LabelFor(model => model.ApellidoMaterno)
+                @Html.TextBoxFor(model => model.ApellidoMaterno, new{ @class = "form-control"})
+            </div>
+            <div class="col-md">
+                @Html.LabelFor(model => model.FechaNacimiento)
+                @Html.EditorFor(model => model.FechaNacimiento, new{ @class = "form-control"})
+            </div>
+       </div>
+       <br />
+       <div class="row">
+           <div class="col-md">
+               @Html.LabelFor(model => model.EstadoCivil)
+               @Html.TextBoxFor(model => model.EstadoCivil, new { @class = "form-control"})
+           </div>
+           <div class="col-md">
+               <div class="row">
+                   <div class="col-md">
+                       @Html.LabelFor(model => model.Genero)
+                   </div>
+               </div>
+                @if (Model.Genero == "G")
+                {
+                    <label></label>
+                }
+            </div>
+       </div>
+    }
+</div>
+

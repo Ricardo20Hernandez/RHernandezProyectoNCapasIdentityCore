@@ -1,0 +1,41 @@
+﻿@model ML.UserIdentity
+@{
+            // ViewData["Title"] = "Asignar";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1 style="font-weight:bold">Agregar Rol a Usuario</h1>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h4>Elige el usuario para añadirle el rol de @ViewBag.Name</h4>
+            <br />
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Asignar", "Rol", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md">
+                @Html.HiddenFor(model => model.Rol.RoleId)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                @Html.DropDownListFor(model => model.IdUsuario, new SelectList(Model.IdentityUsers,"IdUsuario","UserName"),"Seleccione un Usuario",new{ @class="form-control"})
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md">
+                <input type="submit" class="btn btn-success" value=" Asignar" />
+            </div>
+        </div>
+    }
+</div>
+

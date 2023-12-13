@@ -1,0 +1,47 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+       <h2 style="font-weight:bold">Rol</h2>
+        <br />
+        <h3 style="font-weight:bold">@ViewBag.Accion</h3>
+        <br />
+       <h5>Ingrese los datos del Rol</h5>
+       <br />
+    </div>
+</div>
+
+@using (Html.BeginForm("Form","Rol",FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
+    <div class="col-md-7">
+        @Html.LabelFor(model => model.Name)
+        <br />
+        <br />
+        <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-controller"></i></span>
+            @if(Model.Id != null)
+            {
+                @Html.TextBoxFor(model => model.Name, new { @class="form-control", @id = "txtNombre", autocomplete = "off"})
+                @Html.TextBoxFor(model => model.Id, new{@class="visually-hidden"})
+            }
+            else
+            {
+                @Html.TextBoxFor(model => model.Name, new { @class="form-control", @id = "txtNombre", @placeholder = "Ejemp: Administrador", autocomplete = "off"})
+            }
+            @* @Html.ValidationMessageFor(model => model.Name,null,new{ @class = "text-danger"}) *@
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md">
+                <input type="submit" value="@ViewBag.Accion" class="btn btn-success">
+                @Html.ActionLink("Regresar","GetAll","Rol", htmlAttributes: new{ @class="btn btn-danger"})
+            </div>
+        </div>
+    </div>
+}
+

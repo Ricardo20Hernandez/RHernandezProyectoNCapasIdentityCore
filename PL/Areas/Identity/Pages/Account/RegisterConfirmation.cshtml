@@ -1,0 +1,25 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Confirmación de Registro";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<br />
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p>
+            Hemos enviado un correo a la cuenta registrada para que primero la validez y asi puedas iniciar sesión. 
+            <a href="https://www.google.com/intl/es-419/gmail/about/">Pulsar para ir a Gmail</a>
+</p>
+    }
+    else
+    {
+<p>
+        Please check your email to confirm your account.
+</p>
+    }
+}
+

@@ -1,0 +1,80 @@
+﻿@model ML.Empleado
+@{
+    ViewData["Title"] = "EmpleadoDependiente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1 style="font-weight:bold">Dependientes</h1>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h3>Empleado: @Model.Nombre @Model.ApellidoPaterno</h3>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h5>Boton verde para agregar dependiente, boton amarillo para actualizar dependiente y boton rojo para eliminar dependiente</h5>
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 ms-auto">
+            <a class="btn btn-success bi bi-person-add" asp-action="Form" asp-controller="EmpleadoDependiente"> Agregar</a>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @if (Model.Dependiente.Dependientes != null && Model.Dependiente.Dependientes.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover" id="myTable">
+                        <thead class="table-light">
+                            <tr class="table">
+                                <th class="text-center">Editar</th>
+                                <th class="visually-hidden">IdDependiente</th>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Fecha Nacimiento</th>
+                                <th class="text-center">Estado Civil</th>
+                                <th class="text-center">Genero</th>
+                                <th class="text-center">Telefono</th>
+                                <th class="text-center">RFC</th>
+                                <th class="text-center">Dependiente Tipo</th>
+                                <th class="text-center">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.Dependiente dependiente in Model.Dependiente.Dependientes)
+                            {
+                                <tr class="table">
+                                    <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill " href="@Url.Action("Form","EmpleadoDependiente", new{IdDependiente = dependiente.IdDependiente})"></a></td>
+                                    <td class="visually-hidden">IdDependiente</td>
+                                    <td class="text-center">@dependiente.Nombre @dependiente.ApellidoPaterno @dependiente.ApellidoMaterno</td>
+                                    <td class="text-center">@dependiente.FechaNacimiento</td>
+                                    <td class="text-center">@dependiente.EstadoCivil</td>
+                                    <td class="text-center">@dependiente.Genero</td>
+                                    <td class="text-center">@dependiente.Telefono</td>
+                                    <td class="text-center">@dependiente.RFC</td>
+                                    <td class="text-center">@dependiente.DependienteTipo.Nombre</td>
+                                    <td class="text-center"><a class="btn btn-danger bi bi-recycle" href="@Url.Action("Delete","EmpleadoDependiente",new{IdDependiente = @dependiente.IdDependiente})" onclick="return confirm('¿Estas seguro de eliminar este dependiente?');"></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">@ViewBag.Mensaje</div>
+        }
+    </div>
+</div>
+

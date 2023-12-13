@@ -1,0 +1,95 @@
+﻿@model ML.Empleado
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>Empleados</h1>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h6>
+                Eligue una opción, boton verde para agregar,
+                boton amarillo para actualizar y boton rojo para eliminar
+                un empleado
+            </h6>
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 ms-auto">
+            <a class="btn btn-success bi bi-person-fill-addl" asp-controller="Empleado" asp-action="Form"> Agregar</a>
+            <br />
+            <br />
+        </div>
+    </div>
+    @if (Model.Empleados != null && Model.Empleados.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md">
+                <table class="table table-hover table-bordered" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Editar</th>
+                            <th class="visually-hidden">NumeroEmpleado</th>
+                            <th class="visually-hidden">RFC</th>
+                            <th class="text-center">Nombre</th>
+                            @* <th class="text-center">ApellidoPaterno</th>
+                        <th class="text-center">ApellidoMaterno</th> *@
+                            <th class="text-center">Email</th>
+                            <th class="text-center">Telefono</th>
+                            <th class="text-center">FechaNacimiento</th>
+                            <th class="visually-hidden">NSS</th>
+                            <th class="visually-hidden">FechaIngreso</th>
+                            <th class="text-center">Foto</th>
+                            <th class="text-center">IdEmpresa</th>
+                            <th class="text-center">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Empleado empleado in Model.Empleados)
+                        {
+                            <tr>
+                                <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" asp-controller="Empleado" asp-action="Form" asp-route-numeroEmpleado="@empleado.NumeroEmpleado" onclick="return confirm('¿Estas seguro de editar este empleado?');"></a></td>
+                                <td class="visually-hidden">@empleado.NumeroEmpleado</td>
+                                <td class="visually-hidden">@empleado.RFC</td>
+                                <td class="text-center">@empleado.Nombre @empleado.ApellidoPaterno @empleado.ApellidoMaterno </td>
+                                @* <td class="text-center">@empleado.ApellidoPaterno</td>
+                        <td class="text-center">@empleado.ApellidoMaterno</td> *@
+                                <td class="text-center">@empleado.Email</td>
+                                <td class="text-center">@empleado.Telefono</td>
+                                <td class="text-center">@empleado.FechaNacimiento</td>
+                                <td class="visually-hidden">@empleado.NSS</td>
+                                <td class="visually-hidden">@empleado.FechaIngreso</td>
+                                <td class="text-center">
+                                    @if (empleado.Foto == null)
+                                    {
+                                        <img src="https://png.pngtree.com/png-vector/20191009/ourmid/pngtree-user-icon-png-image_1796659.jpg" id="imgEmpleado" style="height:100px; width:100px;"/>
+                                    }else
+                                    {
+                                        <img id="imgEmpleado" src="data:img/png;base64,@Convert.ToBase64String(empleado.Foto)" style="height:100px; width:100px" />
+                                    }
+                                </td>
+                                <td class="text-center">@empleado.IdEmpresa</td>
+                                <td class="text-center"><a class="btn btn-danger bi bi-recycle" asp-controller="Empleado" asp-action="Delete" asp-route-numeroEmpleado="@empleado.NumeroEmpleado" onclick="return confirm('¿Estas seguro de eliminar este empleado?');"></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            No se han encontrado empleados
+        </div>
+    }
+</div>
+
