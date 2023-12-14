@@ -36,24 +36,28 @@
                 @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.Nombre)
                 @Html.TextBoxFor(model => model.Nombre, new {@class = "form-control", @onkeypress = "return SoloLetras(event,'lblErrorNombre')" })
+                @Html.ValidationMessageFor(model => model.Nombre, null, new { @style = "color:red;" })
                 <label id="lblErrorNombre"></label>
             </div>
             <div class="col-md">
                 @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.ApellidoPaterno)
                 @Html.TextBoxFor(model => model.ApellidoPaterno, new {@class = "form-control", @onkeypress = "return SoloLetras(event,'lblErrorApellidoPaterno')"})
+                @Html.ValidationMessageFor(model => model.ApellidoPaterno, null, new { @style = "color:red;"})
                 <label id="lblErrorApellidoPaterno"></label>
             </div>
             <div class="col-md">
                 @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.ApellidoMaterno)
                 @Html.TextBoxFor(model => model.ApellidoMaterno, new{ @class = "form-control" , @onkeypress = "return SoloLetras(event,'lblErrorApellidoMaterno')"})
+                @Html.ValidationMessageFor(model => model.ApellidoMaterno, null, new { @style = "color:red;"})
                 <label id="lblErrorApellidoMaterno"></label>
             </div>
             <div class="col-md">
                 @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.FechaNacimiento)
                 @Html.EditorFor(model => model.FechaNacimiento, new{ htmlAttributes = new { @id = "datepicker"}})
+                @Html.ValidationMessageFor(model => model.FechaNacimiento, null, new { @style = "color:red;" })
             </div>
         </div>
         <br />
@@ -62,6 +66,7 @@
                 @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.EstadoCivil)
                 @Html.TextBoxFor(model => model.EstadoCivil, new { @class = "form-control" , @onkeypress = "return SoloLetras(event,'lblErrorEstadoCivil')"})
+                @Html.ValidationMessageFor(model => model.EstadoCivil, null, new { @style = "color:red;" })
                 <label id="lblErrorEstadoCivil"></label>
             </div>
             <div class="col-md">
@@ -94,17 +99,24 @@
                     <label><input type="radio" name="Genero" value="F" style="width: 20px; height: 20px;" /> Femenino</label>
                     //<label>@Html.RadioButtonFor(model => model.Genero, "F", new { @id = "rbtnSexoF", @style = "width: 20px; height: 20px;" }) Femenino</label>
                 }
+                <div class="row">
+                    <div class="col-md">
+                        @Html.ValidationMessageFor(model => model.Genero, null, new { @style = "color:red;" })
+                    </div>
+                </div>
             </div>
             <div class="col-md">
                 @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.Telefono)
                 @Html.TextBoxFor(model => model.Telefono, new{ @class = "form-control", @id="txtTelefono", @onblur = "ValidarTelefono('txtTelefono','lblErrorTelefono')"})
+                @Html.ValidationMessageFor(model => model.Telefono, null, new{ @style = "color:red;"})
                 <label id="lblErrorTelefono"></label>
             </div>
             <div class="col-md">
                 @Html.Label(null,"*",new {@style = "color:red;"})
                 @Html.LabelFor(model => model.RFC)
                 @Html.TextBoxFor(model => model.RFC, new{ @class = "form-control", @id="txtRFC", @onblur = "ValidarRFC('txtRFC','lblErrorRFC')"})
+                @Html.ValidationMessageFor(model => model.RFC, null, new{ @style = "color:red;"})
                 <label id="lblErrorRFC"></label>
             </div>
         </div>
@@ -206,6 +218,7 @@
         } else {
             $("#" + controlId).text("RFC valido");
             $('#' + controlId).css({ color: "green" });
+            return true;
         }
     }
 

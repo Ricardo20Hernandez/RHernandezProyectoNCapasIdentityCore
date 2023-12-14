@@ -33,6 +33,8 @@ public partial class RhernandezProyectoNcapasIdentityCoreContext : DbContext
 
     public virtual DbSet<Empleado> Empleados { get; set; }
 
+    public virtual DbSet<Empresa> Empresas { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=.; Database=RHernandezProyectoNCapasIdentityCore; TrustServerCertificate=True; Trusted_Connection=True; User ID=sa; Password=pass@word1;");
@@ -200,6 +202,26 @@ public partial class RhernandezProyectoNcapasIdentityCoreContext : DbContext
                 .HasColumnName("RFC");
             entity.Property(e => e.Telefono)
                 .HasMaxLength(20)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Empresa>(entity =>
+        {
+            entity.HasKey(e => e.IdEmpresa).HasName("PK__Empresa__5EF4033ED8253534");
+
+            entity.ToTable("Empresa");
+
+            entity.Property(e => e.DireccionWeb)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Email)
+                .HasMaxLength(254)
+                .IsUnicode(false);
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Telefono)
+                .HasMaxLength(50)
                 .IsUnicode(false);
         });
 

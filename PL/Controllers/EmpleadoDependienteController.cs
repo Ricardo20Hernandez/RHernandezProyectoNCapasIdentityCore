@@ -29,20 +29,23 @@ namespace PL.Controllers
             if (HttpContext.Session.GetString("Empleado") == "")
             {
                 ML.Result result = BL.Dependiente.GetByNumeroEmpleado(NumeroEmpleado);
+
+                empleado.Dependiente = new ML.Dependiente(); //Iniciar propiedad de navegación
+                empleado.Nombre = Nombre;
+                empleado.ApellidoPaterno = ApellidoPaterno;
+
+                HttpContext.Session.SetString("Empleado", NumeroEmpleado);
+                HttpContext.Session.SetString("Nombre", empleado.Nombre);
+                HttpContext.Session.SetString("ApellidoPaterno", empleado.ApellidoPaterno);
+
                 if (result.Correct)
                 {
-                    empleado.Dependiente = new ML.Dependiente(); //Iniciar propiedad de navegación
                     empleado.Dependiente.Dependientes = result.Objects;
-                    empleado.Nombre = Nombre;
-                    empleado.ApellidoPaterno = ApellidoPaterno;
-
-                    HttpContext.Session.SetString("Empleado", NumeroEmpleado);
-                    HttpContext.Session.SetString("Nombre", empleado.Nombre);
-                    HttpContext.Session.SetString("ApellidoPaterno", empleado.ApellidoPaterno);
                 }
                 else
                 {
-                    ViewBag.Mensaje = result.ErrorMessage;
+                    
+                    ViewBag.Mensaje = "Este empleado aún no cuenta con dependientes";
                 }
             }
             else
@@ -50,20 +53,21 @@ namespace PL.Controllers
                 NumeroEmpleado = HttpContext.Session.GetString("Empleado");
                 ML.Result result = BL.Dependiente.GetByNumeroEmpleado(NumeroEmpleado);
 
-                if(result.Correct)
-                {
-                    empleado.Dependiente= new ML.Dependiente(); //Iniciar propiedad de navegación
-                    empleado.Dependiente.Dependientes= result.Objects;
-                    empleado.Nombre = HttpContext.Session.GetString("Nombre");
-                    empleado.ApellidoPaterno = HttpContext.Session.GetString("ApellidoPaterno");
+                empleado.Dependiente = new ML.Dependiente(); //Iniciar propiedad de navegación
+                empleado.Nombre = HttpContext.Session.GetString("Nombre");
+                empleado.ApellidoPaterno = HttpContext.Session.GetString("ApellidoPaterno");
 
-                    HttpContext.Session.SetString("Empleado", NumeroEmpleado);
-                    HttpContext.Session.SetString("Nombre", empleado.Nombre);
-                    HttpContext.Session.SetString("ApellidoPaterno", empleado.ApellidoPaterno);
+                HttpContext.Session.SetString("Empleado", NumeroEmpleado);
+                HttpContext.Session.SetString("Nombre", empleado.Nombre);
+                HttpContext.Session.SetString("ApellidoPaterno", empleado.ApellidoPaterno);
+
+                if (result.Correct)
+                {
+                    empleado.Dependiente.Dependientes = result.Objects;
                 }
                 else
                 {
-                    ViewBag.Mensaje = result.ErrorMessage;
+                    ViewBag.Mensaje = "Este empleado aún no cuenta con dependientes";
                 }
             }
             return View(empleado);
@@ -79,19 +83,19 @@ namespace PL.Controllers
             dependiente.DependienteTipo = new ML.DependienteTipo();
             dependiente.DependienteTipo.DependientesTipos = resultDependienteTipo.Objects;
 
-            if(IdDependiente == null) // Agregar
+            if (IdDependiente == null) // Agregar
             {
                 ViewBag.Accion = "Agregar";
             }
             else // Actualizar
-            { 
+            {
                 //Buscar registro
                 ML.Result result = BL.Dependiente.GetById(IdDependiente.Value);
 
                 if (result.Correct)
                 {
                     dependiente = (ML.Dependiente)result.Object;
-                    
+
                 }
                 ViewBag.Accion = "Actualizar";
                 dependiente.DependienteTipo.DependientesTipos = resultDependienteTipo.Objects;
@@ -105,7 +109,7 @@ namespace PL.Controllers
         {
             string NumeroEmpleado = HttpContext.Session.GetString("Empleado");
 
-            if(dependiente.IdDependiente == 0) //Agregar
+            if (dependiente.IdDependiente == 0) //Agregar
             {
                 ML.Result result = BL.Dependiente.Add(dependiente, NumeroEmpleado);
 
@@ -120,7 +124,7 @@ namespace PL.Controllers
             }
             else //Actualizar
             {
-                ML.Result result = BL.Dependiente.Update(dependiente,NumeroEmpleado);
+                ML.Result result = BL.Dependiente.Update(dependiente, NumeroEmpleado);
                 if (result.Correct)
                 {
                     ViewBag.Mensaje = "Dependiente actualizado correctamente";
@@ -130,6 +134,7 @@ namespace PL.Controllers
                     ViewBag.Mensaje = result.ErrorMessage;
                 }
             }
+
             return View("Modal");
         }
 

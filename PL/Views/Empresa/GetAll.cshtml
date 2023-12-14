@@ -1,0 +1,88 @@
+﻿@model ML.Empresa
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-auto">
+            <h2>Empresas</h2>
+            <hr style="width:100%;text-align:left;margin-left:0" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-auto">
+            <h5>Selecciona boton verde para agregar una empresa, boton amarillo para modificar empresa o boton rojo para eliminar empresa</h5>
+            <hr style="width:100%;text-align:left;margin-left:0" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 ms-auto">
+            @Html.ActionLink("Agregar", "Form", "Empresa", new { @class = "btn btn-success bi bi-person-plus-fill" })
+            <hr style="width:100%;text-align:left;margin-left:0" />
+        </div>
+    </div>
+    @if (Model.Empresas != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-bordered " id="myTable">
+                    <thead class="table-light">
+                        <tr class="table">
+                            <th class="text-center">Editar</th>
+                            <th class="visually-hidden">IdEmpresa</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Telefono</th>
+                            <th class="text-center">Email</th>
+                            <th class="text-center">Direccion Web</th>
+                            <th class="text-center">Logo</th>
+                            <th class="text-center">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Empresa empresa in Model.Empresas)
+                        {
+                            <tr>
+                                <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill " href="@Url.Action("Form", "Empresa", new {IdEmpresa = empresa.IdEmpresa})"><i class="fa-solid fa-pencil"></i></a></td>
+                                <td class="visually-hidden">@empresa.IdEmpresa</td>
+                                <td class="text-center">@empresa.Nombre</td>
+                                <td class="text-center">@empresa.Telefono</td>
+                                <td class="text-center">@empresa.Email</td>
+                                <td class="text-center">@empresa.DireccionWeb</td>
+                                <td class="text-center">
+                                    @if(Model.Logo == null)
+                                    {
+                                        <img src="https://api.freelogodesign.org/assets/thumb/logo/a17b07eb64d341ffb1e09392aa3a1698_400.png" id="imgEmpresa" style="width:100px; height:100px" />
+                                    }
+                                    else
+                                    {
+                                        <img src="data:" id="imgEmpresa" style="width:100px; height:100px" />
+                                    }
+                                </td>
+                                <td class="text-center"> <a class="btn btn-danger bi bi-recycle" href="@Url.Action("Delete", "Empresa" ,new {IdEmpresa = empresa.IdEmpresa})" onclick="return confirm('¿Estas seguro de eliminar?');"><i class="fa-solid fa-trash-can" style="color:white;"></i></a>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert"> No se encontraron registros </div>
+    }
+</div>
+
+@section scripts{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+
