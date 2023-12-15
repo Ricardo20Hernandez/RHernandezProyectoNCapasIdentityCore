@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace PL.Controllers
 {
@@ -6,6 +8,7 @@ namespace PL.Controllers
     {
         public IActionResult GetAll()
         {
+            GetEmail();
             HttpContext.Session.SetString("Empleado", "");
             ML.Empleado empleado = new ML.Empleado();
             ML.Result result = BL.Empleado.GetAll();
@@ -152,6 +155,17 @@ namespace PL.Controllers
             }
 
             return View("Modal");
+        }
+
+
+        public IActionResult GetEmail()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
+
+            // For ASP.NET Core >= 5.0
+            string userEmail = User.FindFirstValue(ClaimTypes.Email); // will give the user's Email
+            return View();
         }
     }
 }
