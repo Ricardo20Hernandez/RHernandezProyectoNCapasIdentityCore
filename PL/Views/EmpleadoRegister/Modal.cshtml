@@ -16,8 +16,8 @@
                 <p>@ViewBag.Mensaje</p>
             </div>
             <div class="modal-footer">
-                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/RegisterConfirmation"></a>
-                <a class="btn btn-primary bi bi-arrow-return-left" asp-controller="Rol" asp-action="GetAll"> Regresar</a>
+                @* <a class="nav-link" asp-area="Identity" asp-page="/Areas/Identity/Pages/Account/Manage/RegisterConfirmation"> Confirmación</a> *@
+                <a class="btn btn-primary " asp-controller="Home" asp-action="Index"> Confirmar</a>
             </div>
         </div>
     </div>

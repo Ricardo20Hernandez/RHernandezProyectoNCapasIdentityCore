@@ -174,7 +174,7 @@ namespace PL.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToAction("Form", "EmpleadoRegister",new { Email = Input.Email });
+                        return RedirectToAction("Form", "EmpleadoRegister",new { email = Input.Email});
 
                         //return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }

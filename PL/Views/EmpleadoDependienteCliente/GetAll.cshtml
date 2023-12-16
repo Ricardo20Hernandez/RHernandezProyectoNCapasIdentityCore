@@ -1,0 +1,68 @@
+﻿@model ML.Dependiente
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1 style="font-weight:bold">Lista de dependientes</h1>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h3>Empleado: @ViewBag.Nombre @ViewBag.ApellidoPaterno</h3>
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        @if (Model.Dependientes != null && Model.Dependientes.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table tabletable-bordered table-hover" id="myTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Fecha Nacimiento</th>
+                                <th class="text-center">Estado Civil</th>
+                                <th class="text-center">Genero</th>
+                                <th class="text-center">Telefono</th>
+                                <th class="text-center">RFC</th>
+                                <th class="text-center">Tipo Dependiente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(ML.Dependiente dependiente in Model.Dependientes)
+                            {
+                                <tr>
+                                    <td class="text-center">@dependiente.Nombre @dependiente.ApellidoPaterno @dependiente.ApellidoMaterno</td>
+                                    <td class="text-center">@dependiente.FechaNacimiento</td>
+                                    <td class="text-center">@dependiente.EstadoCivil</td>
+                                        @if (@dependiente.Genero == "M ")
+                                        {
+                                            <td class="text-center">Masculino</td>
+                                        }else
+                                        {
+                                            <td class="text-center">Femenino</td>
+                                        }
+                                    <td class="text-center">@dependiente.Telefono</td>
+                                    <td class="text-center">@dependiente.RFC</td>
+                                    <td class="text-center">@dependiente.DependienteTipo.Nombre</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">@ViewBag.Mensaje</div>
+        }
+    </div>
+</div>
+

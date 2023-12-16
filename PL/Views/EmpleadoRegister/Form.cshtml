@@ -4,123 +4,122 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md">
-            <h1>Datos Personales</h1>
+<div class="row">
+    <div class="wrapper">
+        <form method="post" asp-controller="EmpleadoRegister" asp-action="Form" enctype="multipart/form-data" class="form-signin">
+            <h2 style="text-align:center">Datos Personales</h2>
+            <h6 style="text-align:center">Generación de Cuenta</h6>
+            <hr />
+            <div class="row">
+                <div class="col-md">
+                    <label for="numeroEmpleado" class="mb-1" hidden>NumeroEmpleado: </label>
+                    <input type="text" id="numeroEmpleado" name="numeroEmpleado" value="@Model.NumeroEmpleado" class="visually-hidden" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="rfc" class="mb-1"><i class="fas fa-user"></i>RFC: </label>
+                    <input type="text" id="rfc" name="rfc" value="@Model.RFC" class="form-control" required onblur="return ValidarRFC('rfc','lblErrorRFC')" />
+                    @* @Html.ValidationMessageFor(model => model.RFC,null,new { @style= "color:red;"}) *@
+                    <label id="lblErrorRFC"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="nombre" class="mb-1"><i class="fas fa-user"></i>Nombre: </label>
+                    <input type="text" id="nombre" name="nombre" value="@Model.Nombre" class="form-control" required onkeypress=" return SoloLetras(event,'lblErrorNombre')" />
+                    @* @Html.ValidationMessageFor(model => model.Nombre,null,new { @style= "color:red;"}) *@
+                    <label id="lblErrorNombre"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="apellidoPaterno" class="mb-1"><i class="fas fa-user"></i>Apellido Paterno: </label>
+                    <input type="text" id="apellidoPaterno" name="apellidoPaterno" value="@Model.ApellidoPaterno" class="form-control" required onkeypress=" return SoloLetras(event,'lblErrorApellidoPaterno')" />
+                    @* @Html.ValidationMessageFor(model => model.ApellidoPaterno,null,new { @style= "color:red;"}) *@
+                    <label id="lblErrorApellidoPaterno"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="apellidoMaterno" class="mb-1"><i class="fas fa-user"></i>Apellido Materno: </label>
+                    <input type="text" id="apellidoMaterno" name="apellidoMaterno" value="@Model.ApellidoMaterno" class="form-control" required onkeypress=" return SoloLetras(event,'lblErrorApellidoMaterno')" />
+                    @* @Html.ValidationMessageFor(model => model.ApellidoMaterno,null,new { @style= "color:red;"}) *@
+                    <label id="lblErrorApellidoMaterno"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="email" class="mb-1" hidden>Email: </label>
+                    <input type="text" id="email" name="email" value="@Model.Email" class="visually-hidden" />
+                    @* @Html.ValidationMessageFor(model => model.Email,null,new { @style= "color:red;"}) *@
+                    @* <label id="lblErrorEmail"></label> *@
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="telefono" class="mb-1"><i class="fas fa-user"></i>Telefono: </label>
+                    <input type="text" id="telefono" name="telefono" value="@Model.Telefono" class="form-control" required onblur="ValidarTelefono('telefono','lblErrorTelefono')" />
+                    @* @Html.ValidationMessageFor(model => model.Telefono,null,new { @style= "color:red;"}) *@
+                    <label id="lblErrorTelefono"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="fechaNacimiento" class="mb-1"><i class="fas fa-user"></i>Fecha Nacimiento: </label>
+                    <input type="text" id="datepicker" name="fechaNacimiento" value="@Model.FechaNacimiento" class="form-control" required autocomplete="off" />
+                    @* @Html.ValidationMessageFor(model => model.FechaNacimiento,null,new { @style= "color:red;"}) *@
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="nss" class="mb-1"><i class="fas fa-user"></i>NSS: </label>
+                    <input type="text" id="nss" name="nss" value="@Model.NSS" class="form-control" required onblur="ValidarNSS('nss','lblErrorNSS')" />
+                    @* @Html.ValidationMessageFor(model => model.NSS,null,new { @style= "color:red;"}) *@
+                    <label id="lblErrorNSS"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="fechaIngreso" class="mb-1"><i class="fas fa-user"></i>Fecha Ingreso: </label>
+                    <input type="text" id="datepickerDos" name="fechaIngreso" value="@Model.FechaIngreso" class="form-control" required autocomplete="off"/>
+                    @* @Html.ValidationMessageFor(model => model.FechaIngreso,null,new { @style= "color:red;"}) *@
+                </div>
+            </div>
             <br />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md">
-            <h4>
-                Ingresa tus datos personales para terminar de crear la cuenta
-            </h4>
+            <div class="row">
+                <div class="col-md-5">
+                    <label for="foto" class="mb-1"><i class="fas fa-user"></i>Foto: </label>
+                    <br />
+                    <input type="file" id="fuImagen" name="fuImagen" onchange="PreviewImagen(event)" />
+                    <br />
+                    @if (Model.Foto == null)
+                    {
+                        <img src="https://png.pngtree.com/png-vector/20191009/ourmid/pngtree-user-icon-png-image_1796659.jpg" id="imgUsuario" style="width: 100px; height: 100px;" />
+                    }
+                    else
+                    {
+                        <img id="imgUsuario" src="data:image/png;base64,@Convert.ToBase64String(Model.Foto)" style="width: 100px; height: 100px;" />
+                    }
+                    @Html.HiddenFor(model => model.Foto)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="idEmpresa" class="mb-1" hidden>IdEmpresa: </label>
+                    <input type="text" id="idEmpresa" name="idEmpresa" value="@Model.IdEmpresa" class="visually-hidden" />
+                    @* @Html.ValidationMessageFor(model => model.IdEmpresa,null,new { @style= "color:red;"})
+                    <label id="lblErrorIdEmpresa"></label> *@
+                </div>
+            </div>
             <br />
-            <br />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md">
-            <form method="post" asp-controller="EmpleadoRegister" asp-action="Form" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-md">
-                        <label for="numeroEmpleado" class="visually-hidden"><i class="fas fa-user"></i>NumeroEmpleado: </label>
-                        <input type="text" id="numeroEmpleado" name="numeroEmpleado" value="@Model.NumeroEmpleado" class="visually-hidden" />
-                    </div>
+            <div class="row">
+                <div class="col-md">
+                    <input type="submit" class="btn btn-success" value="@ViewBag.Accion" />
+                    @* <a class="btn btn-danger" asp-controller="Empleado" asp-action="GetAll"> Regresar</a> *@
                 </div>
-                <div class="row">
-                    <div class="col-md">
-                        <label for="rfc" class="mb-1"><i class="fas fa-user"></i>RFC: </label>
-                        <input type="text" id="rfc" name="rfc" value="@Model.RFC" class="form-control" required onblur="return ValidarRFC('rfc','lblErrorRFC')" />
-                        @* @Html.ValidationMessageFor(model => model.RFC,null,new { @style= "color:red;"}) *@
-                        <label id="lblErrorRFC"></label>
-                    </div>
-                    <div class="col-md">
-                        <label for="nombre" class="mb-1"><i class="fas fa-user"></i>Nombre: </label>
-                        <input type="text" id="nombre" name="nombre" value="@Model.Nombre" class="form-control" required onkeypress=" return SoloLetras(event,'lblErrorNombre')" />
-                        @* @Html.ValidationMessageFor(model => model.Nombre,null,new { @style= "color:red;"}) *@
-                        <label id="lblErrorNombre"></label>
-                    </div>
-                    <div class="col-md">
-                        <label for="apellidoPaterno" class="mb-1"><i class="fas fa-user"></i>Apellido Paterno: </label>
-                        <input type="text" id="apellidoPaterno" name="apellidoPaterno" value="@Model.ApellidoPaterno" class="form-control" required onkeypress=" return SoloLetras(event,'lblErrorApellidoPaterno')" />
-                        @* @Html.ValidationMessageFor(model => model.ApellidoPaterno,null,new { @style= "color:red;"}) *@
-                        <label id="lblErrorApellidoPaterno"></label>
-                    </div>
-                    <div class="col-md">
-                        <label for="apellidoMaterno" class="mb-1"><i class="fas fa-user"></i>Apellido Materno: </label>
-                        <input type="text" id="apellidoMaterno" name="apellidoMaterno" value="@Model.ApellidoMaterno" class="form-control" required onkeypress=" return SoloLetras(event,'lblErrorApellidoMaterno')" />
-                        @* @Html.ValidationMessageFor(model => model.ApellidoMaterno,null,new { @style= "color:red;"}) *@
-                        <label id="lblErrorApellidoMaterno"></label>
-                    </div>
-                </div>
-                <br />
-                <br />
-                <div class="row">
-                    <div class="col-md">
-                        <label for="email" class="mb-1"><i class="visually-hidden"></i>Email: </label>
-                        <input type="text" id="email" name="email" value="@Model.Email" class="visually-hidden" />
-                        @* @Html.ValidationMessageFor(model => model.Email,null,new { @style= "color:red;"}) *@
-                        @* <label id="lblErrorEmail"></label> *@
-                    </div>
-                    <div class="col-md">
-                        <label for="telefono" class="mb-1"><i class="fas fa-user"></i>Telefono: </label>
-                        <input type="text" id="telefono" name="telefono" value="@Model.Telefono" class="form-control" required onblur="ValidarTelefono('telefono','lblErrorTelefono')" />
-                        @* @Html.ValidationMessageFor(model => model.Telefono,null,new { @style= "color:red;"}) *@
-                        <label id="lblErrorTelefono"></label>
-                    </div>
-                    <div class="col-md">
-                        <label for="fechaNacimiento" class="mb-1"><i class="fas fa-user"></i>Fecha Nacimiento: </label>
-                        <input type="text" id="datepicker" name="fechaNacimiento" value="@Model.FechaNacimiento" class="form-control" required />
-                        @* @Html.ValidationMessageFor(model => model.FechaNacimiento,null,new { @style= "color:red;"}) *@
-                    </div>
-                    <div class="col-md">
-                        <label for="nss" class="mb-1"><i class="fas fa-user"></i>NSS: </label>
-                        <input type="text" id="nss" name="nss" value="@Model.NSS" class="form-control" required onblur="ValidarNSS('nss','lblErrorNSS')" />
-                        @* @Html.ValidationMessageFor(model => model.NSS,null,new { @style= "color:red;"}) *@
-                        <label id="lblErrorNSS"></label>
-                    </div>
-                </div>
-                <br />
-                <br />
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="fechaIngreso" class="mb-1"><i class="fas fa-user"></i>Fecha Ingreso: </label>
-                        <input type="text" id="datepickerDos" name="fechaIngreso" value="@Model.FechaIngreso" class="form-control" required />
-                        @* @Html.ValidationMessageFor(model => model.FechaIngreso,null,new { @style= "color:red;"}) *@
-                    </div>
-                    <div class="col-md-5">
-                        <label for="foto" class="mb-1"><i class="fas fa-user"></i>Foto: </label>
-                        <br />
-                        <input type="file" id="fuImagen" name="fuImagen" onchange="PreviewImagen(event)" />
-                        @if (Model.Foto == null)
-                        {
-                            <img src="https://png.pngtree.com/png-vector/20191009/ourmid/pngtree-user-icon-png-image_1796659.jpg" id="imgUsuario" style="width: 100px; height: 100px;" />
-                        }
-                        else
-                        {
-                            <img id="imgUsuario" src="data:image/png;base64,@Convert.ToBase64String(Model.Foto)" style="width: 100px; height: 100px;" />
-                        }
-                        @Html.HiddenFor(model => model.Foto)
-                    </div>
-                    <div class="col-md-3">
-                        <label for="idEmpresa" class="mb-1"><i class="visually-hidden"></i>IdEmpresa: </label>
-                        <input type="text" id="idEmpresa" name="idEmpresa" value="@Model.IdEmpresa" class="visually-hidden"/>
-                        @* @Html.ValidationMessageFor(model => model.IdEmpresa,null,new { @style= "color:red;"})
-                        <label id="lblErrorIdEmpresa"></label> *@
-                    </div>
-                </div>
-                <br />
-                <br />
-                <div class="row">
-                    <div class="col-md">
-                        <input type="submit" class="btn btn-success" value="@ViewBag.Accion" />
-                        @* <a class="btn btn-danger" asp-controller="Empleado" asp-action="GetAll"> Regresar</a> *@
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -256,4 +255,26 @@
     }
 
 </script>
+
+<style>
+
+    .wrapper {
+        margin-top: 20px;
+        margin-bottom: 80px;
+    }
+
+    .form-signin {
+        max-width: 380px;
+        padding: 15px 35px 45px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .btn {
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+</style>
 

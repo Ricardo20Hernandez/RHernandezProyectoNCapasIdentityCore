@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
@@ -263,6 +264,47 @@ namespace BL
                 result.Correct = false;
                 result.Ex= ex;
                 result.ErrorMessage = "Error al eliminar el usuario" + result.Ex;
+                //throw;
+            }
+            return result;
+        }
+
+        //Método del lado del cliente, obtener Número de Empleado para encontrar sus dependientes.
+        public static ML.Result GetEmpleado(string email)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.RhernandezProyectoNcapasIdentityCoreContext context = new DL.RhernandezProyectoNcapasIdentityCoreContext())
+                {
+                    var query = (from empleado in context.Empleados
+                                 where empleado.Email == email
+                                 select new
+                                 {
+                                     NumeroEmpleado = empleado.NumeroEmpleado,
+                                     Nombre = empleado.Nombre,
+                                     ApellidoPaterno = empleado.ApellidoPaterno
+                                 });
+
+                    if(query != null)
+                    {
+                        ML.Empleado empleado = new ML.Empleado();
+
+                        var employer = query.FirstOrDefault();
+                        empleado.NumeroEmpleado = employer.NumeroEmpleado;
+                        empleado.Nombre = employer.Nombre;
+                        empleado.ApellidoPaterno = employer.ApellidoPaterno;
+
+                        result.Object = empleado;
+                        result.Correct = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = result.Ex.Message;
                 //throw;
             }
             return result;
