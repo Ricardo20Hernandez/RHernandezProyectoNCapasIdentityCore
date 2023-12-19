@@ -14,7 +14,7 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using(DL.RhernandezProyectoNcapasIdentityCoreContext context = new DL.RhernandezProyectoNcapasIdentityCoreContext())
+                using (DL.RhernandezProyectoNcapasIdentityCoreContext context = new DL.RhernandezProyectoNcapasIdentityCoreContext())
                 {
                     var query = (from user in context.AspNetUsers
                                  select new
@@ -22,7 +22,7 @@ namespace BL
                                      IdUser = user.Id,
                                      UserName = user.UserName
                                  }).ToList();
-                    if(query.Count > 0 )
+                    if (query.Count > 0)
                     {
                         result.Objects = new List<object>();
 
@@ -57,7 +57,7 @@ namespace BL
                 {
                     var query = context.Database.ExecuteSqlRaw($"AddAspNetUserRoles '{user.IdUsuario}', '{user.Rol.RoleId}'");
 
-                    if(query > 0)
+                    if (query > 0)
                     {
                         result.Correct = true;
                     }
@@ -76,6 +76,51 @@ namespace BL
                 //throw;
             }
 
+            return result;
+        }
+
+        public static ML.Result GetMissingUsers() //Usuaarios faltantes
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.RhernandezProyectoNcapasIdentityCoreContext context = new DL.RhernandezProyectoNcapasIdentityCoreContext())
+                {
+                    var query = (from user in context.AspNetUsers
+                                 where !(from aseguradora in context.Aseguradoras
+                                         select aseguradora.Id).Contains(user.Id)
+                                 select new
+                                 {
+                                     IdUser = user.Id,
+                                     UserName = user.UserName
+
+                                 }).ToList();
+
+                    if (query.Count > 0)
+                    {
+                        result.Objects = new List<object>();
+
+                        foreach (var userIdentity in query)
+                        {
+                            ML.UserIdentity usuario = new ML.UserIdentity();
+                            usuario.IdUsuario = userIdentity.IdUser;
+                            usuario.UserName = userIdentity.UserName;
+
+                            result.Objects.Add(usuario);
+                        }
+
+                        result.Correct = true;
+                    }
+
+                }
+            }
+            catch (Exception Ex)
+            {
+                result.Correct = false;
+                result.Ex = Ex;
+                result.ErrorMessage = "Error en la consulta en la BD" + result.Ex.Message;
+                //throw;
+            }
             return result;
         }
     }

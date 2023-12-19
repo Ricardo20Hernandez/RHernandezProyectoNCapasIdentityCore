@@ -44,7 +44,11 @@ namespace PL.Controllers
                     aseguradora = (ML.Aseguradora)result.Object;
                 }
                 ViewBag.Accion = "Actualizar";
+                //ML.UserIdentity user = new ML.UserIdentity();
+                //user.IdUsuario = aseguradora.UserIdentity.IdUsuario;
+                //user.UserName = aseguradora.UserIdentity.UserName;
                 aseguradora.UserIdentity.IdentityUsers = resultUsuarios.Objects;
+                //aseguradora.UserIdentity.IdentityUsers.Add(user);
             }
             return View(aseguradora);
         }
