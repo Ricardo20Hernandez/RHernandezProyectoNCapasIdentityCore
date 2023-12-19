@@ -1,0 +1,66 @@
+﻿@model ML.Aseguradora
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1 style="font-weight:bold">Aseguradora</h1>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h3>@ViewBag.Accion</h3>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h5>Ingresa los datos para la aseguradora</h5>
+        </div>
+    </div>
+    <br />
+    @using (Html.BeginForm("Form", "Aseguradora", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md">
+                @Html.LabelFor(model => model.IdAseguradora, new {@class = "visually-hidden"})
+                @Html.TextBoxFor(model => model.IdAseguradora, new{@class = "visually-hidden"})
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md">
+                @Html.Label(null,"*", new {@style = "color:red;"})
+                @Html.LabelFor(model => model.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new{@class = "form-control"})
+            </div>
+            <div class="col-md">
+                @Html.Label(null,"*", new{@style = "color:red;"})
+                @Html.LabelFor(model => model.FechaCreacion)
+                <input id="fechacreacion" name="fechacreacion" type="datetime-local" value="@Model.FechaCreacion" class="form-control" required />
+            </div>
+            <div class="col-md">
+                @Html.Label(null,"*", new{@style = "color:red;"})
+                @Html.LabelFor(model => model.FechaModificacion)
+                <input id="fechaModificacion" name="fechaModificacion" type="datetime-local" value="@Model.FechaModificacion" class="form-control" required></input>
+            </div>
+            <div class="col-md">
+                @Html.Label(null,"*",new{@style = "color:red;"})
+                @Html.Label(null,"Usuario")
+                @Html.DropDownListFor(model => model.UserIdentity.IdUsuario, new SelectList(Model.UserIdentity.IdentityUsers,"IdUsuario","UserName"),"Seleccione un Usuario",new {@class = "form-control"})
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md">
+                <input type="submit" class="btn btn-success" value="@ViewBag.Accion" />
+                <a class="btn btn-danger" asp-action="GetAll" asp-controller="Aseguradora"> Regresar</a>
+            </div>
+        </div>
+    }
+</div>

@@ -15,6 +15,8 @@ public partial class RhernandezProyectoNcapasIdentityCoreContext : DbContext
     {
     }
 
+    public virtual DbSet<Aseguradora> Aseguradoras { get; set; }
+
     public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
     public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
@@ -41,6 +43,24 @@ public partial class RhernandezProyectoNcapasIdentityCoreContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Aseguradora>(entity =>
+        {
+            entity.HasKey(e => e.IdAseguradora).HasName("PK__Asegurad__8FA1C5970042E8B9");
+
+            entity.ToTable("Aseguradora");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificación).HasColumnType("datetime");
+            entity.Property(e => e.Id).HasMaxLength(450);
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.IdNavigation).WithMany(p => p.Aseguradoras)
+                .HasForeignKey(d => d.Id)
+                .HasConstraintName("FK__Aseguradora__Id__02FC7413");
+        });
+
         modelBuilder.Entity<AspNetRole>(entity =>
         {
             entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
