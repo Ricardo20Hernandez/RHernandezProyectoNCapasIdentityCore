@@ -1,0 +1,53 @@
+﻿@model ML.Aseguradora
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1 style="font-weight:bold">Información de Aseguradora</h1>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h3>Empleado: @ViewBag.Nombre @ViewBag.ApellidoPaterno</h3>
+            <br />
+            <br />
+        </div>
+    </div>
+    @if (Model.Aseguradoras != null && Model.Aseguradoras.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-hover" id="myTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="visually-hidden">IdAseguradora</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">FechaCreacion</th>
+                            <th class="text-center">FechaModificacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Aseguradora aseguradora in Model.Aseguradoras)
+                        {
+                            <tr>
+                                <td class="visually-hidden">@aseguradora.IdAseguradora</td>
+                                <td class="text-center">@aseguradora.Nombre</td>
+                                <td class="text-center">@aseguradora.FechaCreacion</td>
+                                <td class="text-center">@aseguradora.FechaModificacion</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.Mensaje</div>
+    }
+</div>

@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace BL
 {
@@ -223,6 +225,53 @@ namespace BL
                 result.Correct = false;
                 result.Ex = ex; 
                 result.ErrorMessage = "Problemas al eliminar la aseguradora " + result.Ex.Message; 
+                //throw;
+            }
+            return result;
+        }
+
+
+        public static ML.Result GetByUserId(string userId)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL.RhernandezProyectoNcapasIdentityCoreContext context = new DL.RhernandezProyectoNcapasIdentityCoreContext())
+                {
+                    var query = (from aseguradora in context.Aseguradoras
+                                 where aseguradora.Id == userId
+                                 select new
+                                 {
+                                     IdAseguradora = aseguradora.IdAseguradora,
+                                     Nombre = aseguradora.Nombre,
+                                     FechaCreacion = aseguradora.FechaCreacion,
+                                     FechaModificacion = aseguradora.FechaModificación                                  
+
+                                 }).ToList();
+
+                    if(query.Count > 0)
+                    {
+                        result.Objects = new List<object>();
+                        foreach(var asegura in query)
+                        {
+                            ML.Aseguradora aseguradora = new ML.Aseguradora();
+
+                            aseguradora.IdAseguradora = asegura.IdAseguradora;
+                            aseguradora.Nombre = asegura.Nombre;
+                            aseguradora.FechaCreacion = asegura.FechaCreacion.Value.ToString("dd/MM/yyyy HH:mm:ss");
+                            aseguradora.FechaModificacion = asegura.FechaModificacion.Value.ToString("dd/MM/yyyy HH:mm:ss");
+
+                            result.Objects.Add(aseguradora);    
+                        }
+                        result.Correct = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = "Error al realizar la consulta " + result.Ex.Message;
                 //throw;
             }
             return result;
