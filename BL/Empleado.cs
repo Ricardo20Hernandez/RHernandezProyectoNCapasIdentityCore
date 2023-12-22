@@ -54,7 +54,7 @@ namespace BL
                             empleado.NSS = employeer.NSS;
                             empleado.FechaIngreso = (employeer.FechaIngreso == null) ? "" : employeer.FechaIngreso.Value.ToString("dd/MM/yyyy");
                             empleado.Foto = employeer.Foto;
-                            empleado.IdEmpresa = (employeer.IdEmpresa == null) ? 0 : employeer.IdEmpresa.Value;
+                            empleado.IdEmpresa = employeer.IdEmpresa.Value;
 
                             result.Objects.Add(empleado);
                         }
@@ -116,7 +116,7 @@ namespace BL
                         empleado.NSS = employeer.NSS;
                         empleado.FechaIngreso = (employeer.FechaIngreso == null) ? "" : employeer.FechaIngreso.Value.ToString("dd/MM/yyyy");
                         empleado.Foto = employeer.Foto;
-                        empleado.IdEmpresa = (employeer.IdEmpresa == null) ? 0 : employeer.IdEmpresa.Value;
+                        empleado.IdEmpresa = employeer.IdEmpresa.Value;
 
                         result.Object = empleado;
                         result.Correct = true;

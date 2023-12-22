@@ -105,10 +105,10 @@
                         @Html.HiddenFor(model => model.Foto)
                     </div>
                     <div class="col-md-3">
-                        <label for="idEmpresa" class="mb-1"><i class="fas fa-user"></i>IdEmpresa: </label>
-                        <input type="text" id="idEmpresa" name="idEmpresa" value="@Model.IdEmpresa" class="form-control" required onkeypress=" return SoloNumeros(event,'lblErrorIdEmpresa')" />
-                        @* @Html.ValidationMessageFor(model => model.IdEmpresa,null,new { @style= "color:red;"}) *@
-                        <label id="lblErrorIdEmpresa"></label>
+                        <label for="idEmpresa" class="mb-1">IdEmpresa: </label>
+                        <input type="text" id="idEmpresa" name="idEmpresa" value="@Model.IdEmpresa" class="form-control" />
+                        @* @Html.ValidationMessageFor(model => model.IdEmpresa,null,new { @style= "color:red;"})
+                        <label id="lblErrorIdEmpresa"></label> *@         
                     </div>
                 </div>
                 <br />

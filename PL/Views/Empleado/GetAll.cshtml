@@ -70,8 +70,9 @@
                                 <td class="text-center">
                                     @if (empleado.Foto == null)
                                     {
-                                        <img src="https://png.pngtree.com/png-vector/20191009/ourmid/pngtree-user-icon-png-image_1796659.jpg" id="imgEmpleado" style="height:100px; width:100px;"/>
-                                    }else
+                                        <img src="https://png.pngtree.com/png-vector/20191009/ourmid/pngtree-user-icon-png-image_1796659.jpg" id="imgEmpleado" style="height:100px; width:100px;" />
+                                    }
+                                    else
                                     {
                                         <img id="imgEmpleado" src="data:img/png;base64,@Convert.ToBase64String(empleado.Foto)" style="height:100px; width:100px" />
                                     }
