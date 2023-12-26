@@ -1,0 +1,58 @@
+﻿@model ML.Empresa
+@{
+    ViewData["Title"] = "CargaMasiva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1 style="font-weight:bold">Carga Masiva Empresa.</h1>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h5>Elige un archivo txt para la carga masiva.</h5>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <a><input type="submit" value="TXT" class="btn btn-primary col-md-12" id="txt" /></a>
+            <br />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm("CargaMasivaTXT", "Empresa", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row g-3" id="fuImage" style="display:none;">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-adon1"><i class="bi bi-file-earmark-text-fill" style="color:blue;"></i></span>
+                            <input type='file' class="form-control" name="txt" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-1">
+                            <a><input type="submit" value="Cargar" class="btn btn-primary" /></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $('#txt').click(function () {
+            $('#fuImage').toggle('slow', function () {
+            });
+        });
+    </script>
+
+}

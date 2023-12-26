@@ -93,6 +93,69 @@ namespace PL.Controllers
             return View("Modal");
         }
 
+        [HttpGet]
+        public IActionResult CargaMasiva()
+        {
+            ML.Empresa empresa = new ML.Empresa();
+
+            return View(empresa);
+        }
+
+        [HttpPost]
+        public IActionResult CargaMasivaTXT(IFormFile txt)
+        {
+            //Verificar que se insertará un archivo.
+            if(txt != null)
+            {
+                //Validar la extensión del archivo insertado.
+                string extensionArchivo = Path.GetExtension(txt.FileName);
+                string extensionValida = ".txt";
+
+                if(extensionArchivo == extensionValida)
+                {
+                    using (StreamReader file = new StreamReader(txt.OpenReadStream())) //Abrir archivo en CORE
+                    {
+                        string row = file.ReadLine(); //Sacar primera linea que es encabezado (titulos)
+
+                        while (!file.EndOfStream) //Iterar hasta que sea diferente del final.
+                        {
+                            row = file.ReadLine();
+
+                            string[] rowFila = row.Split('|');
+
+                            ML.Empresa empresa = new ML.Empresa();
+
+                            empresa.Nombre = rowFila[0];
+                            empresa.Telefono = rowFila[1];
+                            empresa.Email = rowFila[2];
+                            empresa.DireccionWeb = rowFila[3];
+
+                            ML.Result result = BL.Empresa.Add(empresa);
+
+                            if (result.Correct)
+                            {
+                                ViewBag.Mensaje = "Archivo cargado correctamente";
+                            }
+                            else
+                            {
+                                ViewBag.Mensaje = "Hubo errores al cargar el archivo";
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    ViewBag.Mensaje = "Por favor elige un archivo TXT";
+                }   
+            }
+            else
+            {
+                ViewBag.Mensaje = "Por favor seleccione un archivo";
+            }
+            return View("Modal");
+        }
+
         public byte[] convertFileToByteArray(IFormFile fuImagen)
         {
             MemoryStream target = new MemoryStream();
